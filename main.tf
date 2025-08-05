@@ -10,11 +10,12 @@ data "talos_client_configuration" "this" {
 data "talos_machine_configuration" "this" {
   for_each = var.talos_nodes
 
-  talos_version    = var.talos_version
-  cluster_name     = var.cluster_name
-  cluster_endpoint = "https://${local.cluster_endpoint}:6443"
-  machine_type     = each.value.machine_type
-  machine_secrets  = talos_machine_secrets.this.machine_secrets
+  talos_version      = var.talos_version
+  cluster_name       = var.cluster_name
+  cluster_endpoint   = "https://${local.cluster_endpoint}:6443"
+  machine_type       = each.value.machine_type
+  machine_secrets    = talos_machine_secrets.this.machine_secrets
+  kubernetes_version = var.kubernetes_version
 }
 
 resource "talos_machine_configuration_apply" "this" {

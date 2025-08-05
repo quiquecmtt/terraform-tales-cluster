@@ -13,6 +13,13 @@ variable "cluster_vip" {
   default     = null
 }
 
+variable "kubernetes_version" {
+  description = "Kubernetes cluster version"
+  type        = string
+  sensitive   = false
+  default     = "v1.33.3"
+}
+
 variable "talos_nodes" {
   type = map(object({
     ip_address   = string
