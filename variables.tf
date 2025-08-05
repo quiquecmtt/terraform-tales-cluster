@@ -28,6 +28,19 @@ variable "talos_nodes" {
   }))
 }
 
+variable "metrics_server" {
+  description = "Enable kubernetes certificate rotation"
+  type = object({
+    enabled = optional(bool, false)
+    extraManifests = optional(list(string), [
+      "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml",
+      "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+    ])
+  })
+  sensitive = false
+  default   = false
+}
+
 variable "scheduling_on_control_planes" {
   description = "Allow workload scheduling on control plane nodes"
   type        = bool

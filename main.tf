@@ -20,6 +20,13 @@ data "talos_machine_configuration" "this" {
     yamlencode({
       cluster = {
         allowSchedulingOnControlPlanes = var.scheduling_on_control_planes
+      },
+      machine = {
+        kubelet = {
+          extraArgs = {
+            rotate-server-certificates = var.metrics_server.enabled
+          }
+        }
       }
     })
   ]
