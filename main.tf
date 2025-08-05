@@ -17,6 +17,7 @@ data "talos_machine_configuration" "this" {
   machine_secrets    = talos_machine_secrets.this.machine_secrets
   kubernetes_version = var.kubernetes_version
   config_patches = [
+    # Common
     yamlencode({
       cluster = {
         allowSchedulingOnControlPlanes = var.scheduling_on_control_planes
@@ -28,7 +29,15 @@ data "talos_machine_configuration" "this" {
           }
         }
       }
-    })
+    }), each.value.machine_type == "controlplane" ?
+    # Control plane
+    yamlencode({
+      cluster = {
+        extraManifests = local.extra_manifests
+      }
+    }) :
+    # Worker
+    yamlencode({})
   ]
 }
 
