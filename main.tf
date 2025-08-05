@@ -41,10 +41,7 @@ resource "talos_machine_configuration_apply" "this" {
 }
 
 resource "talos_machine_bootstrap" "this" {
-  depends_on = [talos_machine_configuration_apply.this]
-  # Bootstrap with the first control plane node.
-  # VIP not yet available at this stage, so can't use var.cluster.vip
-  # ref - https://www.talos.dev/v1.9/talos-guides/network/vip/#caveats
+  depends_on           = [talos_machine_configuration_apply.this]
   node                 = local.first_control_plane_node_ip
   client_configuration = talos_machine_secrets.this.client_configuration
 }
