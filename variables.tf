@@ -38,7 +38,6 @@ variable "metrics_server" {
     ])
   })
   sensitive = false
-  default   = false
 }
 
 variable "scheduling_on_control_planes" {
