@@ -28,6 +28,13 @@ variable "talos_nodes" {
   }))
 }
 
+variable "scheduling_on_control_planes" {
+  description = "Allow workload scheduling on control plane nodes"
+  type        = bool
+  sensitive   = false
+  default     = false
+}
+
 variable "talos_version" {
   description = "Talos node version"
   type        = string

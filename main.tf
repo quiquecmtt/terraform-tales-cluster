@@ -16,6 +16,13 @@ data "talos_machine_configuration" "this" {
   machine_type       = each.value.machine_type
   machine_secrets    = talos_machine_secrets.this.machine_secrets
   kubernetes_version = var.kubernetes_version
+  config_patches = [
+    yamlencode({
+      cluster = {
+        allowSchedulingOnControlPlanes = var.scheduling_on_control_planes
+      }
+    })
+  ]
 }
 
 resource "talos_machine_configuration_apply" "this" {
