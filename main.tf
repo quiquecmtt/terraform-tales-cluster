@@ -96,6 +96,9 @@ resource "talos_cluster_kubeconfig" "this" {
 }
 
 resource "helm_release" "cilium" {
+  depends_on = [
+    talos_cluster_kubeconfig.this
+  ]
   name             = "cilium"
   repository       = var.cilium.repository
   chart            = var.cilium.chart
