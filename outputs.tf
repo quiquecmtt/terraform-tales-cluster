@@ -1,4 +1,4 @@
-output "talosconfig" {
+output "talos_client_config" {
   description = "Talos client configuration (talosconfig)"
   value       = data.talos_client_configuration.this.client_configuration
   sensitive   = true
@@ -10,4 +10,8 @@ output "kubeconfig" {
   sensitive   = true
 }
 
-
+output "kube_client_config" {
+  description = "Kubeconfig in HCL format"
+  value       = resource.talos_cluster_kubeconfig.this.client_configuration
+  sensitive   = true
+}
