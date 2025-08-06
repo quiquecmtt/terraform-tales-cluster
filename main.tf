@@ -23,19 +23,7 @@ data "talos_machine_configuration" "this" {
     yamlencode({
       cluster = {
         allowSchedulingOnControlPlanes = var.scheduling_on_control_planes
-      },
-      machine = {
-        kubelet = {
-          extraArgs = {
-            rotate-server-certificates = var.metrics_server.enabled
-          }
-        }
-      }
-    }), each.value.machine_type == "controlplane" ?
-    # Control plane
-    yamlencode({
-      cluster = {
-        extraManifests = local.extra_manifests
+        extraManifests                 = local.extra_manifests
         network = {
           cni = {
             name = var.disable_cni ? "none" : "flannel"
@@ -44,10 +32,15 @@ data "talos_machine_configuration" "this" {
         proxy = {
           disabled = var.disable_kube_proxy
         }
+      },
+      machine = {
+        kubelet = {
+          extraArgs = {
+            rotate-server-certificates = var.metrics_server.enabled
+          }
+        }
       }
-    }) :
-    # Worker
-    yamlencode({})
+    })
   ]
 }
 
