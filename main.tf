@@ -49,7 +49,7 @@ data "talos_machine_configuration" "this" {
         network = {
           interfaces = var.cluster_vip != null && var.cluster_vip != "" ? [{
             deviceSelector = { physical = true }
-            vip            = { vip = var.cluster_vip }
+            vip            = { ip = var.cluster_vip }
           }] : []
         }
       }
