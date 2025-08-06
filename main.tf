@@ -40,13 +40,18 @@ data "talos_machine_configuration" "this" {
           cni = {
             name = var.disable_cni ? "none" : "flannel"
           }
+        }
+        proxy = {
+          disabled = var.disable_kube_proxy
+        }
+      }
+      machine = {
+        network = {
           interfaces = var.cluster_vip != null && var.cluster_vip != "" ? [{
             deviceSelector = { physical = true }
             vip            = var.cluster_vip
           }] : []
-        }
-        proxy = {
-          disabled = var.disable_kube_proxy
+
         }
       }
     }) :
