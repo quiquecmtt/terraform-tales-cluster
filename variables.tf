@@ -53,3 +53,14 @@ variable "talos_version" {
   sensitive   = false
   default     = "v1.10.6"
 }
+
+variable "cilium" {
+  description = "Cillium related variables"
+  type = object({
+    enabled    = optional(bool, false)
+    repository = optional(string, "https://helm.cilium.io/")
+    chart      = optional(string, "cilium")
+    version    = optional(string, "1.18.0")
+    namespace  = optional(string, "kube-system")
+  })
+}
