@@ -54,13 +54,16 @@ variable "talos_version" {
   default     = "v1.10.6"
 }
 
-variable "cilium" {
-  description = "Cillium related variables"
-  type = object({
-    enabled    = optional(bool, false)
-    repository = optional(string, "https://helm.cilium.io/")
-    chart      = optional(string, "cilium")
-    version    = optional(string, "1.18.0")
-    namespace  = optional(string, "kube-system")
-  })
+variable "disable_cni" {
+  description = "Disable Talos default CNI (Flannel)"
+  type        = bool
+  sensitive   = false
+  default     = false
+}
+
+variable "disable_kube_proxy" {
+  description = "Disable Talos kube-proxy"
+  type        = bool
+  sensitive   = false
+  default     = false
 }

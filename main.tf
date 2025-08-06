@@ -38,11 +38,11 @@ data "talos_machine_configuration" "this" {
         extraManifests = local.extra_manifests
         network = {
           cni = {
-            name = var.cilium.enabled ? "none" : "flannel"
+            name = var.disable_cni ? "none" : "flannel"
           }
         }
         proxy = {
-          disabled = !var.cilium.enabled
+          disabled = var.disable_kube_proxy
         }
       }
     }) :
@@ -91,37 +91,5 @@ resource "talos_cluster_kubeconfig" "this" {
   timeouts = {
     read = "1m"
   }
-}
-
-resource "helm_release" "cilium" {
-  depends_on = [
-    talos_cluster_kubeconfig.this
-  ]
-  name             = "cilium"
-  repository       = var.cilium.repository
-  chart            = var.cilium.chart
-  version          = var.cilium.version
-  namespace        = var.cilium.namespace
-  create_namespace = false
-
-  set = [{
-    name  = "ipam.mode"
-    value = "kubernetes"
-    }, {
-    name  = "kubeProxyReplacement"
-    value = "false"
-    }, {
-    name  = "securityContext.capabilities.ciliumAgent"
-    value = "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
-    }, {
-    name  = "securityContext.capabilities.cleanCiliumState"
-    value = "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"
-    }, {
-    name  = "cgroup.autoMount.enabled"
-    value = "false"
-    }, {
-    name  = "cgroup.hostRoot"
-    value = "/sys/fs/cgroup"
-  }]
 }
 
