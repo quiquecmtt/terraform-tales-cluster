@@ -95,6 +95,6 @@ resource "talos_cluster_kubeconfig" "this" {
 }
 
 resource "local_file" "kubeconfig" {
-  content  = output.kubeconfig
+  content  = resource.talos_cluster_kubeconfig.this.kubeconfig_raw
   filename = "./${var.cluster_name}.kubeconfig"
 }
