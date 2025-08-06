@@ -36,15 +36,13 @@ data "talos_machine_configuration" "this" {
     yamlencode({
       cluster = {
         extraManifests = local.extra_manifests
-        cluster = {
-          network = {
-            cni = {
-              name = var.cilium.enabled ? "none" : "flannel"
-            }
+        network = {
+          cni = {
+            name = var.cilium.enabled ? "none" : "flannel"
           }
-          proxy = {
-            disabled = !var.cilium.enabled
-          }
+        }
+        proxy = {
+          disabled = !var.cilium.enabled
         }
       }
     }) :
