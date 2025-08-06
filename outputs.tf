@@ -1,5 +1,5 @@
 output "talos_client_config" {
-  description = "Talos client configuration (talosconfig)"
+  description = "Talos client configuration in HCL format"
   value       = data.talos_client_configuration.this.client_configuration
   sensitive   = true
 }
