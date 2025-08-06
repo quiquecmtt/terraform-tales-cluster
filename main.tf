@@ -97,7 +97,7 @@ resource "local_file" "talosconfig" {
   content = yamlencode({
     context = var.cluster_name
     contexts = {
-      var.cluster_name = merge(
+      (var.cluster_name) = merge(
         { endpoints = data.talos_client_configuration.this.endpoints },
         data.talos_client_configuration.this.client_configuration
       )
