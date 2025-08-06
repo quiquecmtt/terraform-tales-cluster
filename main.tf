@@ -96,7 +96,7 @@ resource "talos_cluster_kubeconfig" "this" {
     data.talos_cluster_health.this
   ]
   # The kubeconfig endpoint will be populated from the talos_machine_configuration cluster_endpoint
-  node                 = local.cluster_endpoint
+  node                 = local.first_control_plane_node_ip
   client_configuration = talos_machine_secrets.this.client_configuration
   timeouts = {
     read = "1m"
