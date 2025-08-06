@@ -93,6 +93,19 @@ resource "talos_cluster_kubeconfig" "this" {
   }
 }
 
+resource "local_file" "talosconfig" {
+  content = yamlencode({
+    context = var.cluster_name
+    contexts = {
+      var.cluster_name = merge(
+        { endpoints = data.talos_client_configuration.this.endpoints },
+        data.talos_client_configuration.this.client_configuration
+      )
+    }
+  })
+  filename = "./${var.cluster_name}.talosconfig"
+}
+
 resource "local_file" "kubeconfig" {
   content  = resource.talos_cluster_kubeconfig.this.kubeconfig_raw
   filename = "./${var.cluster_name}.kubeconfig"
