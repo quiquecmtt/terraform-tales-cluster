@@ -15,3 +15,9 @@ output "kube_client_config" {
   value       = resource.talos_cluster_kubeconfig.this.client_configuration
   sensitive   = true
 }
+
+output "kube_endpoint" {
+  description = "Kubernetes cluster control plane endpoint"
+  value       = "https://${local.cluster_endpoint}:6443"
+  sensitive   = false
+}
