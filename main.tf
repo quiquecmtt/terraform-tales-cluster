@@ -40,7 +40,7 @@ data "talos_machine_configuration" "this" {
           cni = {
             name = var.disable_cni ? "none" : "flannel"
           }
-          interfaces = var.cluster_vip ? [{
+          interfaces = var.cluster_vip != null && var.cluster_vip != "" ? [{
             deviceSelector = { physical = true }
             vip            = var.cluster_vip
           }] : []
